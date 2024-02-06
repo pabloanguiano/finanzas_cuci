@@ -5,3 +5,6 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/',[CapturaController::class, 'index'])->name('captura.index');
+Route::get('/', function () {
+    return '';
+});
