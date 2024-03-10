@@ -2,7 +2,7 @@
 
 @section('content')
 
-<form action="POST" action="{{route('capture.store')}}">
+<form action="POST" action="{{route('captura.store')}}">
 
   @csrf
 
@@ -11,14 +11,14 @@
     <div class="col">
       <div class="input-group mb-3">
       <span class="input-group-text" id="basic-addon1">Usuario</span>
-      <select class="form-select" aria-label="Default select example">
-        @forelse ($users as $user)
+      <!--<select class="form-select" aria-label="Default select example">
+       @forelse ($records as $record)
         <option selected>Open this select menu</option>
         @empty
         <option selected>No data</option>
         @endforelse        
         <option value="1">One</option>
-      </select>
+      </select>-->
     </div>
     </div>
     <div class="col">
@@ -216,7 +216,7 @@
         <th scope="col"># SOLICITUD</th>
         <th scope="col">DESCRIPCIÓN</th>
         <th scope="col">MOTNO</th>
-        <th scope="col">PROVEEDOR</th>
+        <th scope="col">PROVEEDOR*</th>
         <th scope="col">TIPO</th>
         <th scope="col">DEPENDENCIA</th>
         <th scope="col">PENDIENTES</th>
@@ -224,15 +224,17 @@
       </tr>
     </thead>
     <tbody>
+      
+      @forelse($records as $record)
       <tr>
-        <td>1</td>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-        <td>
+      <td>{{ $record->application }}</td>
+      <td>{{ $record->concept }}</td>
+      <td>{{ $record->request_amount }}</td>
+      <td>{{ $record->ures }}</td>
+      <td>{{ $record->type_application }}</td>
+      <td>{{ $record->ures_name }}</td>
+      <td>fatlta pendientes</td>
+      <td>
         <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
           <div class="btn-group me-2" role="group" aria-label="Second group">
             <button type="button" class="btn btn-success">Actualizar</button>            
@@ -242,45 +244,11 @@
           </div>
         </div>
       </td>
-      </tr>
-      <tr>
-        <td>20</td>
-        <td>Mark</td>
-        <td>jose</td>
-        <td>@mdo</td>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-        <td>
-        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-          <div class="btn-group me-2" role="group" aria-label="Second group">
-            <button type="button" class="btn btn-success">Actualizar</button>            
-          </div>
-          <div class="btn-group" role="group" aria-label="Third group">
-            <button type="button" class="btn btn-danger">Eliminar</button>
-          </div>
-        </div>
-      </td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-        <td>
-        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-          <div class="btn-group me-2" role="group" aria-label="Second group">
-            <button type="button" class="btn btn-success">Actualizar</button>            
-          </div>
-          <div class="btn-group" role="group" aria-label="Third group">
-            <button type="button" class="btn btn-danger">Eliminar</button>
-          </div>
-        </div>
-      </td>
-      </tr>
+    </tr>
+      @empty
+      
+      @endforelse
+    
     </tbody>
   </table>
 </div>

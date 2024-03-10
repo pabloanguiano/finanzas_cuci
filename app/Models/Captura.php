@@ -9,5 +9,5 @@ class Captura extends Model
 {
     use HasFactory;
 
-    protected $garder = [];
+    protected $guarded = [];
 }

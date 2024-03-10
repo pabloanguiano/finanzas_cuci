@@ -9,14 +9,11 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class CapturaFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+  
     public function definition(): array
     {
         return [
+
             'application' => fake()->numberBetween(1000, 5000),
             'type_application' => fake()->numberBetween(1,5),
             'receipt_date' => fake()->dateTime('10/03/2024 12:00:00', null),
@@ -37,6 +34,7 @@ class CapturaFactory extends Factory
             'ures' => fake()->name(),
             'ures_name' => fake()->name(),
             'request_amount' => 10.0,    
+            
         ];
     }
 }
