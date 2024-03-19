@@ -1,99 +1,75 @@
+let modul,modul_form,formData,ajaxurl, form;
 
-  $(document).ready(function() {
-    $( "#datepicker" ).datepicker();
+ $(document).ready(function () {
+ $("#receipt_date").datepicker({ dateFormat: 'yy-mm-dd',language: 'es' });
+  $('#datos').DataTable({
+    "language": {
+        "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+      }
+  });
+});
 
-  $('#datos').DataTable();
-} );
-/*function search(){ 
+const edit_captura = async (param) => {
+    try {
+        modul = await import('./class_server.js');
+        var formData = {
+            id: param
+        };
+        ajaxurl = '/Captura/edit';
+        const serv = new modul.Server(ajaxurl, formData);
+        let resp = serv.Ajax();
+        modul_form = await import('./class_form.js');
 
-            const tableReg = document.getElementById('datos');
+        resp.forEach(element => {
+            let form = new modul_form.Form(
+                element.application, element.beneficiary_name, element.concept, element.fund,
+                element.id, element.patrimonial_registration, element.payment_complement, element.payment_method,
+                element.payment_type, element.project_name, element.project_p3e, element.receipt_date,
+                element.request_amount, element.status_application, element.stock, element.stock_name,
+                element.travel_format, element.type_application, element.ures, element.ures_name, element.user);
+            form.Form_captura_update();
+        });
 
-            const searchText = document.getElementById('searchTerm').value.toLowerCase();
+    } catch (error) {
+        console.log(error);
+    }
 
-            let total = 0;
+}
 
- 
+const update_captura = async () => {
+    try {
+        formData = JSON.parse(JSON.stringify($("form").serializeArray()));
+        ajaxurl = '/Captura/update';
+        serv = new modul.Server(ajaxurl, formData);
+        let records = serv.Ajax();
+        form = new modul_form.Form();
+        form.Clean_captura(formData,records);
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
 
-            // Recorremos todas las filas con contenido de la tabla
-
-            for (let i = 1; i < tableReg.rows.length; i++) {
-
-                // Si el td tiene la clase "noSearch" no se busca en su cntenido
-
-                if (tableReg.rows[i].classList.contains("noSearch")) {
-
-                    continue;
-
-                }
-
- 
-
-                let found = false;
-
-                const cellsOfRow = tableReg.rows[i].getElementsByTagName('td');
-
-                // Recorremos todas las celdas
-
-                for (let j = 0; j < cellsOfRow.length && !found; j++) {
-
-                    const compareWith = cellsOfRow[j].innerHTML.toLowerCase();
-
-                    // Buscamos el texto en el contenido de la celda
-
-                    if (searchText.length == 0 || compareWith.indexOf(searchText) > -1) {
-
-                        found = true;
-
-                        total++;
-
-                    }
-
-                }
-
-                if (found) {
-
-                    tableReg.rows[i].style.display = '';
-
-                } else {
-
-                    // si no ha encontrado ninguna coincidencia, esconde la
-
-                    // fila de la tabla
-
-                    tableReg.rows[i].style.display = 'none';
-
-                }
-
-            }
-
- 
-
-            // mostramos las coincidencias
-
-            const lastTR=tableReg.rows[tableReg.rows.length-1];
-
-            const td=lastTR.querySelector("td");
-
-            lastTR.classList.remove("hide", "red");
-
-            if (searchText == "") {
-
-                lastTR.classList.add("hide");
-
-            } else if (total) {
-
-                //td.innerHTML="Se ha encontrado "+total+" coincidencia"+((total>1)?"s":"");
-
-            } else {
-
-                lastTR.classList.add("red");
-
-               // td.innerHTML="No se han encontrado coincidencias";
-
-            }
-
+const delete_captura = async (param) => {
+    try {
+        console.log("entrto"+param);
+        formData = {id: param}
+        let formData_clean = JSON.parse(JSON.stringify($("form").serializeArray()));
+        ajaxurl = '/Captura/delete';
+        serv = new modul.Server(ajaxurl,formData);
+        let records = serv.Ajax();
+        console.log(records);
+        form = new modul_form.Form();
+        form.Clean_captura(formData_clean,records);
         
+        
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 
-*/
+
+
+
+   
